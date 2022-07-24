@@ -1,6 +1,7 @@
 # App-Masters
 
 Projeto realizado como parte de seleção do App-Masters https://www.appmasters.io/pt/sobre.
+Vaga pretendida: Backend
 
 #Intruções para rodar o projeto
 
