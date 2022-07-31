@@ -1,5 +1,5 @@
 import request from "supertest";
-import { serverExpress } from"../server.js";
+import { serverExpress } from"../../server.js";
 describe("Teste da rota /donation do servidor", () => {
     const objectRequest = {
         email:"mateca500@gmail.com",
