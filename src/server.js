@@ -1,4 +1,6 @@
 import express from "express";
+import { AppError } from "./AppError.js";
+import { DonationUseCase } from "./DonationUseCase.js";
 
 
 const serverExpress = express();
@@ -12,4 +14,26 @@ serverExpress.use(cors);
 serverExpress.get("/", (request, response) => {
     return response.json({ alive: true });
 });
+serverExpress.post("/donation", (request, response) => {
+    const useCasePost = new DonationUseCase();
+    try {
+        useCasePost.execute(request.body);
+        return response.json({sucess:true});
+    } catch (error) {
+        if(error instanceof AppError) {
+            return response.status(error.statusCode)
+            .json({
+                error: true,
+                errorMessage: error.message,
+                requiredFields: error.fields
+            })
+        }
+        return response.status(400).json({
+            error: true,
+            message: error.message
+        });
+    }
+});
 export { serverExpress};
+
+

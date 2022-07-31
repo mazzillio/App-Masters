@@ -7,11 +7,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
   },
   "devDependencies": {
     "jest": "^28.1.3",
