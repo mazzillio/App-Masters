@@ -30,7 +30,7 @@ serverExpress.post("/donation", (request, response) => {
         }
         return response.status(400).json({
             error: true,
-            message: error.message
+            errorMessage: error.message
         });
     }
 });
