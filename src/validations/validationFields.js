@@ -1,9 +1,9 @@
 export function ValidationFields(devices) {
     const requiredFields = 
     [
-        "name","email","phone",
+        "name","phone",
         "zip","city","state",
-        "streetAddress","number","complement","neighborhood",
+        "streetAddress","number","neighborhood",
         "deviceCount","devices"
     ];
     const missingFields = [];
