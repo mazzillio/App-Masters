@@ -1,6 +1,6 @@
 import express from "express";
 import { AppError } from "./AppError.js";
-import { DonationUseCase } from "./DonationUseCase.js";
+import { DonationUseCase } from "./useCases/DonationUseCase.js";
 
 
 const serverExpress = express();

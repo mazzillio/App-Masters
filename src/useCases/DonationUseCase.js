@@ -1,6 +1,6 @@
 import { ValidationFields } from "./validations/validationFields.js";
 import { ValidationDevicesTypes } from "./validations/validationDeviceType.js";
-import { AppError } from "./AppError.js";
+import { AppError } from "../AppError.js";
 import { VerifyFieldsEmpty } from "./validations/verifyFieldsEmpty.js";
 import { ValidationDevicesValues } from "./validations/validationDeviceValue.js";
 import { VerifyEmail, VerifyPhoneNumber, VerifyZip } from "./validations/vallidationsWithRegex.js";
@@ -34,7 +34,7 @@ export class DonationUseCase{
         }
         const types = ValidationDevicesTypes(devices);
         if(types.length > 0) {
-            const message = types.join(",");
+            const message = types.join(", ");
             throw new Error(`types dos equipamentos ${message} estão incorretos`);
         }
         const values = ValidationDevicesValues(devices);

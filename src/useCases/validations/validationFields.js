@@ -18,5 +18,5 @@ export function ValidationFields(devices) {
         }
 
     })
-    return missingFields.length > 0 ? missingFields : [];
+    return missingFields;
 };
