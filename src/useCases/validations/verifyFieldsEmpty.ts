@@ -10,7 +10,7 @@ export function VerifyFieldsEmpty(objetoRequest: IDonationRequest): string[] {
     city: string;
     state: string;
     streetAddress: string;
-    number: number;
+    number: string;
     complement: string;
     neighborhood: string;
     deviceCount: number;

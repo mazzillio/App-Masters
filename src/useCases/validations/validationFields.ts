@@ -1,6 +1,4 @@
-import { IDonationRequest } from "../../interfaces/IDonationRequest";
-
-export function ValidationFields(devices: IDonationRequest): string[] {
+export function ValidationFields(devices: object): string[] {
   const requiredFields = [
     "name",
     "phone",

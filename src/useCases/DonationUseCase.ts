@@ -1,4 +1,5 @@
 import { AppError } from "../AppError";
+import { IDevice } from "../interfaces/IDevice";
 import { IDonationRequest } from "../interfaces/IDonationRequest";
 import { ValidationDevicesTypes } from "./validations/validationDeviceType";
 import { ValidationDevicesValues } from "./validations/validationDeviceValue";
@@ -33,17 +34,17 @@ export class DonationUseCase {
     if (zip && !VerifyZip(zip)) {
       throw new Error("Zip inválido");
     }
-    if (deviceCount !== devices.length) {
+    if (devices && deviceCount !== devices.length) {
       throw new Error(
         `A quantidade de equipamentos (${deviceCount}) não está de acordo com as informações de equipamentos enviados (${devices.length})`
       );
     }
-    const types = ValidationDevicesTypes(devices);
+    const types = ValidationDevicesTypes(devices as IDevice[]);
     if (types.length > 0) {
       const message = types.join(", ");
       throw new Error(`types dos equipamentos ${message} estão incorretos`);
     }
-    const values = ValidationDevicesValues(devices);
+    const values = ValidationDevicesValues(devices as IDevice[]);
     if (values.length > 0) {
       const message = values.join(", ");
       throw new Error(
