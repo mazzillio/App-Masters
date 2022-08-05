@@ -10,7 +10,7 @@
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "test": "jest",
     "build":"tsc",
-    "start": "node src/index.js"
+    "start": "node build/src/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
