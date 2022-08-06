@@ -1,22 +1,9 @@
 import {
-  VerifyEmail,
   VerifyPhoneNumber,
   VerifyZip,
 } from "../../../useCases/validations/vallidationsWithRegex";
 
 describe("suite de testes para as funções de regex", () => {
-  it("Nao deve ser possivel validar email sem @", () => {
-    const email = "mattegmail.com";
-    expect(VerifyEmail(email)).toBe(false);
-  });
-  it("Nao deve ser possivel validar email sem o .", () => {
-    const email = "matte@gmailcom";
-    expect(VerifyEmail(email)).toBe(false);
-  });
-  it("Deve ser possivel validar email", () => {
-    const email = "matte@gmail.com";
-    expect(VerifyEmail(email)).toBe(true);
-  });
   it("Não deve ser possivel validar zip com letras", () => {
     const zip = "aa53387as";
     expect(VerifyZip(zip)).toBe(false);

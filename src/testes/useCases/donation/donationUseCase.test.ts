@@ -11,46 +11,50 @@ import { objectWithIncorrectValueDevice } from "./objectWtihIncorrectValueDevice
 
 describe("Suite de teste para o caso de uso donation", () => {
   const donation = new DonationUseCase();
-  it("Não deve ser possivel realizar donation sem todos os campos obrigatorios", () => {
-    expect(() => donation.execute(objectWithoutRequiredFields)).toThrow(
-      AppError
-    );
+  it("Não deve ser possivel realizar donation sem todos os campos obrigatorios", async () => {
+    await expect(
+      donation.execute(objectWithoutRequiredFields)
+    ).rejects.toBeInstanceOf(AppError);
   });
-  it("Não deve ser possivel realizar a donation com email invalido", () => {
-    expect(() => donation.execute(objectWithEmailIncorrect)).toThrow(
+  it("Não deve ser possivel realizar a donation com email invalido", async () => {
+    await expect(donation.execute(objectWithEmailIncorrect)).rejects.toThrow(
       new Error("Email inválido")
     );
   });
-  it("Não deve ser possivel realizar a donation com phone invalido", () => {
-    expect(() => donation.execute(objectWithPhoneIncorrect)).toThrow(
+  it("Não deve ser possivel realizar a donation com phone invalido", async () => {
+    await expect(donation.execute(objectWithPhoneIncorrect)).rejects.toThrow(
       new Error("Phone inválido")
     );
   });
-  it("Não deve ser possivel realizar a donation com zip invalido", () => {
-    expect(() => donation.execute(objectWithZipIncorrect)).toThrow(
+  it("Não deve ser possivel realizar a donation com zip invalido", async () => {
+    await expect(donation.execute(objectWithZipIncorrect)).rejects.toThrow(
       new Error("Zip inválido")
     );
   });
-  it("Não deve ser possivel realizar a donation com deviceCount e DeviceSent diferentes", () => {
-    expect(() =>
+  it("Não deve ser possivel realizar a donation com deviceCount e DeviceSent diferentes", async () => {
+    await expect(
       donation.execute(objectWithDeviceCountDeviceSentDifferent)
-    ).toThrow(
+    ).rejects.toThrow(
       new Error(
         "A quantidade de equipamentos (1) não está de acordo com as informações de equipamentos enviados (2)"
       )
     );
   });
-  it("Não deve ser possivel realizar a donation com types de device incorretos", () => {
-    expect(() => donation.execute(objectWithIncorrectTypeDevice)).toThrow(
+  it("Não deve ser possivel realizar a donation com types de device incorretos", async () => {
+    await expect(
+      donation.execute(objectWithIncorrectTypeDevice)
+    ).rejects.toThrow(
       new Error("types dos equipamentos notebok, desktp estão incorretos")
     );
   });
-  it("Não deve ser possivel realizar a donation com values de device incorretos", () => {
-    expect(() => donation.execute(objectWithIncorrectValueDevice)).toThrow(
+  it("Não deve ser possivel realizar a donation com values de device incorretos", async () => {
+    await expect(
+      donation.execute(objectWithIncorrectValueDevice)
+    ).rejects.toThrow(
       new Error("Valor(es) do(s) equipamento(s) notebook estão incorretos")
     );
   });
-  it("Deve ser possivel realizar a donation", () => {
-    expect(() => donation.execute(correctObject)).not.toThrow();
+  it("Deve ser possivel realizar a donation", async () => {
+    await expect(donation.execute(correctObject)).resolves.not.toThrow();
   });
 });
