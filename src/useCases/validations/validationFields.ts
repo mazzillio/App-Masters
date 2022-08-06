@@ -11,14 +11,22 @@ export function ValidationFields(devices: object): string[] {
     "deviceCount",
     "devices",
   ];
-  const missingFields: string[] = [];
+
   const fields: string[] = [];
+  const missingFields: Set<string> = new Set();
   Object.keys(devices).forEach((key: string) => fields.push(key));
   requiredFields.forEach((requiredField) => {
     const findField = fields.find((field) => field === requiredField);
     if (!findField) {
-      missingFields.push(requiredField);
+      missingFields.add(requiredField);
     }
   });
-  return missingFields;
+  Object.entries(devices).forEach(([key, value]) => {
+    if (!["email", "complement"].includes(key)) {
+      if (!value) {
+        missingFields.add(key);
+      }
+    }
+  });
+  return Array.from(missingFields);
 }

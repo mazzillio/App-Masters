@@ -4,7 +4,6 @@ import { correctObject } from "./correctObject";
 import { objectWithPhoneIncorrect } from "./obejectWithPhoneIncorrect";
 import { objectWithDeviceCountDeviceSentDifferent } from "./objectWithDeviceCountDeviceSentDifferent";
 import { objectWithEmailIncorrect } from "./objectWithEmailIncorrect";
-import { objectWithEmptyFields } from "./objectWithEmptyFields";
 import { objectWithIncorrectTypeDevice } from "./objectWithIncorrectTypeDevice";
 import { objectWithoutRequiredFields } from "./objectWithoutRequiredFields";
 import { objectWithZipIncorrect } from "./objectWithZipiIncorrect";
@@ -16,10 +15,6 @@ describe("Suite de teste para o caso de uso donation", () => {
     expect(() => donation.execute(objectWithoutRequiredFields)).toThrow(
       AppError
     );
-  });
-  it("Não deve ser possivel realizar a donation com campos vazios", () => {
-    const error = new Error("Os campos city, zip não podem ser vazios");
-    expect(() => donation.execute(objectWithEmptyFields)).toThrow(error);
   });
   it("Não deve ser possivel realizar a donation com email invalido", () => {
     expect(() => donation.execute(objectWithEmailIncorrect)).toThrow(

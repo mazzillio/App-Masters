@@ -9,7 +9,6 @@ import {
   VerifyPhoneNumber,
   VerifyZip,
 } from "./validations/vallidationsWithRegex";
-import { VerifyFieldsEmpty } from "./validations/verifyFieldsEmpty";
 
 export class DonationUseCase {
   execute(objetoRequest: IDonationRequest) {
@@ -18,12 +17,6 @@ export class DonationUseCase {
     if (fieldsMissing.length > 0) {
       const messageError = `Todos os campos obrigatórios devem ser informados:`;
       throw new AppError(messageError, 400, fieldsMissing);
-    }
-    const fieldsEmpty = VerifyFieldsEmpty(objetoRequest);
-    if (fieldsEmpty.length > 0) {
-      throw new Error(
-        `Os campos ${fieldsEmpty.join(", ")} não podem ser vazios`
-      );
     }
     if (email && !VerifyEmail(email)) {
       throw new Error("Email inválido");
