@@ -1,4 +1,6 @@
 import { AppError } from "../../../AppError";
+import { DonationsInMemoryRepository } from "../../../repository/donations/DonationInMemoryRepository";
+import { UserInMemoryRepository } from "../../../repository/users/UsersInMemoryRepository";
 import { DonationUseCase } from "../../../useCases/DonationUseCase";
 import { correctObject } from "./correctObject";
 import { objectWithPhoneIncorrect } from "./obejectWithPhoneIncorrect";
@@ -10,7 +12,9 @@ import { objectWithZipIncorrect } from "./objectWithZipiIncorrect";
 import { objectWithIncorrectValueDevice } from "./objectWtihIncorrectValueDevice";
 
 describe("Suite de teste para o caso de uso donation", () => {
-  const donation = new DonationUseCase();
+  const usersRepository = new UserInMemoryRepository();
+  const donationsRepository = new DonationsInMemoryRepository();
+  const donation = new DonationUseCase(usersRepository, donationsRepository);
   it("Não deve ser possivel realizar donation sem todos os campos obrigatorios", async () => {
     await expect(
       donation.execute(objectWithoutRequiredFields)

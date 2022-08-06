@@ -2,6 +2,8 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 
 import { AppError } from "./AppError";
+import { DonationsPostgresRepository } from "./repository/donations/DonationPostgresRepository";
+import { UsersPostgresRepository } from "./repository/users/UsersPostgresRepository";
 import { DonationUseCase } from "./useCases/DonationUseCase";
 
 const serverExpress = express();
@@ -13,7 +15,12 @@ serverExpress.get("/", (request: Request, response: Response) => {
 serverExpress.post(
   "/donation",
   async (request: Request, response: Response) => {
-    const useCasePost = new DonationUseCase();
+    const usersRepository = new UsersPostgresRepository();
+    const donationsRepository = new DonationsPostgresRepository();
+    const useCasePost = new DonationUseCase(
+      usersRepository,
+      donationsRepository
+    );
     try {
       await useCasePost.execute(request.body);
       return response.json({ sucess: true });

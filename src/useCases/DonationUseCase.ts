@@ -3,8 +3,8 @@ import * as yup from "yup";
 import { AppError } from "../AppError";
 import { IDevice } from "../interfaces/IDevice";
 import { IDonationRequest } from "../interfaces/IDonationRequest";
-import { DonationsRepository } from "../repository/donationRepository";
-import { UsersRepository } from "../repository/usersRepository";
+import { IDonationsRepository } from "../repository/donations/IDonatonRepository";
+import { IUsersRepotory } from "../repository/users/IUsersRepository";
 import { ValidationDevicesTypes } from "./validations/validationDeviceType";
 import { ValidationDevicesValues } from "./validations/validationDeviceValue";
 import { ValidationFields } from "./validations/validationFields";
@@ -14,6 +14,10 @@ import {
 } from "./validations/vallidationsWithRegex";
 
 export class DonationUseCase {
+  constructor(
+    private usersRepository: IUsersRepotory,
+    private donationsRepository: IDonationsRepository
+  ) {}
   private validantionEmail = yup.object().shape({
     email: yup.string().email(),
   });
@@ -67,15 +71,13 @@ export class DonationUseCase {
       );
     }
     try {
-      const userRepository = new UsersRepository();
-      await userRepository.saveUser({
+      await this.usersRepository.saveUser({
         name: name as string,
         email,
         phone: phone as string,
       });
-      const findUser = await userRepository.findUser(phone as string);
-      const donationsRepository = new DonationsRepository();
-      await donationsRepository.saveDonation({
+      const findUser = await this.usersRepository.findUser(phone as string);
+      await this.donationsRepository.saveDonation({
         userId: findUser.id,
         zip: zip as string,
         streetAddress: streetAddress as string,

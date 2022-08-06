@@ -1,10 +1,11 @@
 import { randomUUID } from "crypto";
 
-import { Device } from "../interfaces/Device";
-import { IDonation } from "../interfaces/IDonation";
-import { prisma } from "../prisma";
+import { Device } from "../../interfaces/Device";
+import { IDonation } from "../../interfaces/IDonation";
+import { prisma } from "../../prisma";
+import { IDonationsRepository } from "./IDonatonRepository";
 
-export class DonationsRepository {
+export class DonationsPostgresRepository implements IDonationsRepository {
   async saveDonation(donationRequest: IDonation): Promise<void> {
     const devices = donationRequest.devices?.map((device) => {
       Object.assign(device, {
@@ -35,7 +36,7 @@ export class DonationsRepository {
       },
     });
   }
-  async listAllDonations() {
+  async listDonations(): Promise<any[]> {
     const allDonations = await prisma.donations.findMany({
       include: {
         user: {

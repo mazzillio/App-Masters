@@ -1,10 +1,11 @@
 import { randomUUID } from "crypto";
 
-import { User } from "../interfaces/IUser";
-import { IUserRequest } from "../interfaces/IUserRequest";
-import { prisma } from "../prisma";
+import { User } from "../../interfaces/IUser";
+import { IUserRequest } from "../../interfaces/IUserRequest";
+import { prisma } from "../../prisma";
+import { IUsersRepotory } from "./IUsersRepository";
 
-export class UsersRepository {
+export class UsersPostgresRepository implements IUsersRepotory {
   async saveUser(user: IUserRequest): Promise<void> {
     const existUser = await prisma.users.findFirst({
       where: {
