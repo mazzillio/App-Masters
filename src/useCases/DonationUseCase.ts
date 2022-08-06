@@ -1,9 +1,10 @@
 import * as yup from "yup";
 
 import { AppError } from "../AppError";
-import { User } from "../entities/users";
 import { IDevice } from "../interfaces/IDevice";
 import { IDonationRequest } from "../interfaces/IDonationRequest";
+import { DonationsRepository } from "../repository/donationRepository";
+import { UsersRepository } from "../repository/usersRepository";
 import { ValidationDevicesTypes } from "./validations/validationDeviceType";
 import { ValidationDevicesValues } from "./validations/validationDeviceValue";
 import { ValidationFields } from "./validations/validationFields";
@@ -17,7 +18,20 @@ export class DonationUseCase {
     email: yup.string().email(),
   });
   async execute(objetoRequest: IDonationRequest): Promise<void> {
-    const { email, zip, phone, deviceCount, devices } = objetoRequest;
+    const {
+      name,
+      email,
+      phone,
+      zip,
+      streetAddress,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      deviceCount,
+      devices,
+    } = objetoRequest;
     const fieldsMissing = ValidationFields(objetoRequest);
     if (fieldsMissing.length > 0) {
       const messageError = `Todos os campos obrigatórios devem ser informados:`;
@@ -53,13 +67,26 @@ export class DonationUseCase {
       );
     }
     try {
-      const { name, email, phone } = objetoRequest;
-      const user = new User({
+      const userRepository = new UsersRepository();
+      await userRepository.saveUser({
         name: name as string,
-        email: email as string,
+        email,
         phone: phone as string,
       });
-      await user.saveUser();
+      const findUser = await userRepository.findUser(phone as string);
+      const donationsRepository = new DonationsRepository();
+      await donationsRepository.saveDonation({
+        userId: findUser.id,
+        zip: zip as string,
+        streetAddress: streetAddress as string,
+        number: number as string,
+        complement: complement as string,
+        neighborhood: neighborhood as string,
+        city: city as string,
+        state: state as string,
+        deviceCount: deviceCount as number,
+        devices: devices as IDevice[],
+      });
     } catch (error) {
       throw new Error(error as string);
     }

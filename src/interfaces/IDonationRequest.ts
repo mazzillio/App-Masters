@@ -13,4 +13,5 @@ export interface IDonationRequest {
   neighborhood?: string;
   deviceCount?: number;
   devices?: IDevice[];
+  userId?: string;
 }

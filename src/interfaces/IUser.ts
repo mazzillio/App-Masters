@@ -1,6 +1,6 @@
-export interface IUser {
-  id?: string;
+export type User = {
+  id: string;
   name: string;
-  email?: string;
+  email: string;
   phone: string;
-}
+};
