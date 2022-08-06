@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
 import { AppError } from "../AppError";
+import { User } from "../entities/users";
 import { IDevice } from "../interfaces/IDevice";
 import { IDonationRequest } from "../interfaces/IDonationRequest";
 import { ValidationDevicesTypes } from "./validations/validationDeviceType";
@@ -50,6 +51,17 @@ export class DonationUseCase {
       throw new Error(
         `Valor(es) do(s) equipamento(s) ${message} estão incorretos`
       );
+    }
+    try {
+      const { name, email, phone } = objetoRequest;
+      const user = new User({
+        name: name as string,
+        email: email as string,
+        phone: phone as string,
+      });
+      await user.saveUser();
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 }
