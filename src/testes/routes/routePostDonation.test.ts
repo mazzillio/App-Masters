@@ -3,7 +3,7 @@ import request from "supertest";
 
 import { serverExpress } from "../../server";
 
-describe("Teste da rota /donation do servidor", () => {
+describe("Teste da rota post /donation do servidor", () => {
   const objectRequest = {
     email: "mateca500@gmail.com",
     phone: "(38)3213-1291",

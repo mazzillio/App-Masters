@@ -38,6 +38,7 @@ export class DonationsPostgresRepository implements IDonationsRepository {
   }
   async listDonations(): Promise<any[]> {
     const allDonations = await prisma.donations.findMany({
+      // selecionando os campos que eu quero que sejam devolvidos na busca
       select: {
         id: true,
         userId: false,

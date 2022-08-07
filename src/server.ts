@@ -43,7 +43,15 @@ serverExpress.post(
 );
 serverExpress.get("/donation", async (req: Request, res: Response) => {
   const listDonations = new GetAllDonationsUseCase(donationsRepository);
-  const donations = await listDonations.execute();
-  return res.json(donations);
+  try {
+    const donations = await listDonations.execute();
+    return res.json(donations);
+  } catch (error) {
+    const err = error as any;
+    return res.status(400).json({
+      error: true,
+      errorMessage: err.message,
+    });
+  }
 });
 export { serverExpress };

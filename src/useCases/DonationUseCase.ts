@@ -70,6 +70,7 @@ export class DonationUseCase {
         `Valor(es) do(s) equipamento(s) ${message} estão incorretos`
       );
     }
+    // operações com o banco de dados
     try {
       await this.usersRepository.saveUser({
         name: name as string,
