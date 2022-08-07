@@ -32,6 +32,7 @@ model Donations {
   user          Users     @relation(fields: [userId], references: [id])
   userId        String
   Devices       Devices[]
+  createdAt    DateTime @default(now())
   @@map("donations")
 }
 

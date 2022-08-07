@@ -38,7 +38,18 @@ export class DonationsPostgresRepository implements IDonationsRepository {
   }
   async listDonations(): Promise<any[]> {
     const allDonations = await prisma.donations.findMany({
-      include: {
+      select: {
+        id: true,
+        userId: false,
+        zip: true,
+        city: true,
+        state: true,
+        streetAdress: true,
+        number: true,
+        complement: true,
+        neightborhood: true,
+        deviceCount: true,
+        createdAt: true,
         user: {
           select: {
             id: false,
@@ -47,7 +58,17 @@ export class DonationsPostgresRepository implements IDonationsRepository {
             phone: true,
           },
         },
-        Devices: true,
+        Devices: {
+          select: {
+            id: false,
+            donationId: false,
+            type: true,
+            condition: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
     return allDonations;

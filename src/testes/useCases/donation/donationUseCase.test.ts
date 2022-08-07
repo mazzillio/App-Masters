@@ -61,4 +61,10 @@ describe("Suite de teste para o caso de uso donation", () => {
   it("Deve ser possivel realizar a donation", async () => {
     await expect(donation.execute(correctObject)).resolves.not.toThrow();
   });
+  it("Deve ser possivel verificar se a donation foi realizada", async () => {
+    await donation.execute(correctObject);
+    const [donation_] = await donationsRepository.listDonations();
+    expect(donation_).toHaveProperty("id");
+    expect(donation_.devices).toStrictEqual(correctObject.devices);
+  });
 });

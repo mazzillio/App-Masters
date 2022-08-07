@@ -5,18 +5,19 @@ import { AppError } from "./AppError";
 import { DonationsPostgresRepository } from "./repository/donations/DonationPostgresRepository";
 import { UsersPostgresRepository } from "./repository/users/UsersPostgresRepository";
 import { DonationUseCase } from "./useCases/DonationUseCase";
+import { GetAllDonationsUseCase } from "./useCases/GetAllDonationsUseCase";
 
 const serverExpress = express();
 serverExpress.use(express.json());
 serverExpress.use(cors());
+const usersRepository = new UsersPostgresRepository();
+const donationsRepository = new DonationsPostgresRepository();
 serverExpress.get("/", (request: Request, response: Response) => {
   return response.json({ alive: true });
 });
 serverExpress.post(
   "/donation",
   async (request: Request, response: Response) => {
-    const usersRepository = new UsersPostgresRepository();
-    const donationsRepository = new DonationsPostgresRepository();
     const useCasePost = new DonationUseCase(
       usersRepository,
       donationsRepository
@@ -40,4 +41,9 @@ serverExpress.post(
     }
   }
 );
+serverExpress.get("/donation", async (req: Request, res: Response) => {
+  const listDonations = new GetAllDonationsUseCase(donationsRepository);
+  const donations = await listDonations.execute();
+  return res.json(donations);
+});
 export { serverExpress };
