@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --transpile-only src/index.ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "test": "jest --timeout=10000",
-    "build": "tsc",
+    "build": "npx prisma migrate deploy & tsc",
     "start": "node build/src/index.js"
   },
   "dependencies": {
